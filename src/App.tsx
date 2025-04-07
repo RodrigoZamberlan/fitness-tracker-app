@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
+import { Food } from "./types/Food";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [foods, setFoods] = useState<Food[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const fetchFoods = async (): Promise<Food[]> => {
+    try {
+      const response = await fetch("http://localhost:5221/api/foods");
+      if (!response.ok) throw new Error("Fail to fetch the foods");
+      return response.json() as Promise<Food[]>;
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : "The api server is not running");
+    }
+  };
+
+  useEffect(() => {
+    const getFoods = async () => {
+      try {
+        setLoading(true);
+        const allFoods = await fetchFoods();
+        setFoods(allFoods);
+        setError(null);
+      } catch (error) {
+        setError(error instanceof Error ? error.message : "Fail to fetch the foods");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getFoods();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
+
+  return <div>
+    {foods && foods.map((food, index) => (<div key={index}>{food.title}</div>))}
+  </div>;
 }
 
-export default App
+export default App;
