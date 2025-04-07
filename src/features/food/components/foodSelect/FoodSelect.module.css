@@ -1,0 +1,31 @@
+.containerSelect {
+    background-color: #383838;
+    text-align: left;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.foodItem {
+    padding: 16px;
+    border-bottom: 1px solid #555555;
+    transition: all ease .5s;
+    cursor: pointer;
+}
+
+.foodItem:hover {
+    background-color: #202020;
+}
+
+.foodItem:last-child {
+    border-bottom: none;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.description {
+    font-size: .8rem;
+    font-weight: 400;
+}
