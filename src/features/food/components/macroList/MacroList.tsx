@@ -6,8 +6,8 @@ const MacroList: React.FC<{ foods: Food[] }> = ({ foods }) => {
 
   return (
     <>
-        {(Object.keys(totalMacros) as (keyof Macro)[]).map((key) => (
-            <div>
+        {(Object.keys(totalMacros) as (keyof Macro)[]).map((key, index) => (
+            <div key={index}>
                 <div>{key}: {totalMacros[key]}</div>
             </div>
         ))}

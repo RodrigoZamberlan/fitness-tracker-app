@@ -4,6 +4,7 @@ import FoodSelect from "./features/food/components/foodSelect/FoodSelect";
 import { useFoods } from "./features/food/hooks/useFoods";
 import { Food } from "./types/Food";
 import MacroList from "./features/food/components/macroList/MacroList";
+import CreateFood from "./features/food/views/CreateFood";
 
 function App() {
   const { foods, loading, error } = useFoods();
@@ -29,6 +30,8 @@ function App() {
 
   return <div>
     <FoodSelect foods={foods} handleSelectFood={selectFood}/>
+
+    <CreateFood />
 
     <div>
       {foodsMeal && foodsMeal.map((food) => (

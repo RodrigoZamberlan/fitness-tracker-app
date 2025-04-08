@@ -15,8 +15,33 @@ export const useFoods = () => {
                 throw new Error("Fail to fetch the foods");
             }
 
-            const data = await response.json() as Food[];
-            setFoods(data);
+            const foodsFetched = await response.json() as Food[];
+            setFoods(foodsFetched);
+
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "The api server is not avaliable");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const addFood = async (food: Food) => {
+        try {
+            setLoading(true);
+            const response = await fetch("http://localhost:5221/api/foods", {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify(food)
+            });
+
+            if (!response.ok) {
+                throw new Error("Fail to add the new food");
+            }
+
+            const foodAdded = await response.json() as Food;
+            setFoods(prev => ({...prev, foodAdded}));
 
         } catch (error) {
             setError(error instanceof Error ? error.message : "The api server is not avaliable");
@@ -29,5 +54,5 @@ export const useFoods = () => {
         getFoods();
     }, []);
 
-    return { foods, loading, error }
+    return { foods, addFood, loading, error }
 }
