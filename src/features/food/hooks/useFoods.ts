@@ -25,7 +25,7 @@ export const useFoods = () => {
         }
     }
 
-    const addFood = async (food: Food) => {
+    const addFood = async (food: Food): Promise<boolean> => {
         try {
             setLoading(true);
             const response = await fetch("http://localhost:5221/api/foods", {
@@ -42,9 +42,11 @@ export const useFoods = () => {
 
             const foodAdded = await response.json() as Food;
             setFoods(prev => ({...prev, foodAdded}));
+            return true;
 
         } catch (error) {
             setError(error instanceof Error ? error.message : "The api server is not avaliable");
+            return false;
         } finally {
             setLoading(false);
         }
