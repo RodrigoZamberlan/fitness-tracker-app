@@ -1,0 +1,32 @@
+.mealView {
+    display: flex;
+    width: 920px;
+    max-width: 100%;
+    justify-content: space-between;
+}
+
+.listMealFoods {
+    margin-bottom: 14px;
+}
+
+.itemMealFood {
+    text-align: left;
+    padding-bottom: 16px;
+}
+
+.containerFields {
+    display: flex;
+    justify-content: space-between;
+}
+
+.containerFields .field {
+    width: 45%;
+}
+
+.containerFields .field label {
+    display: block;
+}
+
+.containerFields .field input, select {
+    width: 100%;
+}

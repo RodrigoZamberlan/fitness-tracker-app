@@ -42,6 +42,7 @@ export const useFoods = () => {
 
             const foodAdded = await response.json() as Food;
             setFoods(prev => ({...prev, foodAdded}));
+            setError(null);
             return true;
 
         } catch (error) {
